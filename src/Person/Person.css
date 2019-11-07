@@ -1,0 +1,29 @@
+.Person{
+    width: 60%;
+    margin: 25px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: cetner;
+}
+
+button{
+    padding: 5px;
+    background-color:white;
+    font: 'inherit';
+    border: '1px solid blue';
+    padding: '8px';
+    cursor: 'pointer';
+    border-radius: 30%;
+}
+
+button:hover{
+    cursor: pointer;
+    background: #4CAF50;
+    border: none;
+    transition-duration: 1s;
+}
+button:focus{
+    background: #4CAF50;
+    border: none;
+}
