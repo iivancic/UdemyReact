@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Validation from './Validation/Validation';
+import Char from './CharComponents/Char';
+import styled from 'styled-components';
+
+/*
+const StyledButton = styled.button`
+    background-color: ${props => props.alt ? 'red' :'green'};
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+  
+    &:hover {
+    background-color:  ${props => props.alt ? 'salmon' :'lightgreen'};
+    color: black;
+    }
+`
+*/
 
 class App extends Component  {
 
@@ -12,7 +31,8 @@ class App extends Component  {
     ],
     otherState: 'some other value',
     showPeople: false,
-    inputLength: 0
+    inputLength: 0,
+    input: ''
   };
 
 
@@ -42,28 +62,58 @@ class App extends Component  {
   }
 
   togglePeopleHandler = () => {  
+
     const doesShow = this.state.showPeople;
+
     this.setState({showPeople: !doesShow});
-    
   }
 
   deletePersonHandler = (personIndex) => {
+
     const people = [...this.state.people]   //creates a new array with the spread operator
+
     people.splice(personIndex, 1); //deletes 1 element on the personIndex index
+
     this.setState({people: people})
   }
 
 
-  lengthOfInput = (event) => {
-    let inputLength = {...this.state.inputLength}
-    inputLength = event.target.value.length;
-    this.setState({inputLength: inputLength})
-    console.log(inputLength)
+  deleteCharHandler  = ( index ) => {
+
+    const text = this.state.input.split('');
+
+    text.splice(index, 1);
+
+    const newText = text.join('');
+
+    this.setState({input: newText})
   }
+
+  lengthOfInput = (event) => {
+
+    let inputLength = {...this.state.inputLength}
+
+    inputLength = event.target.value.length;
+
+    this.setState({inputLength: inputLength})
+    
+    this.setState({input: event.target.value})
+  }
+
 
 render (){
 
+
+  const charList = this.state.input.split('').map((ch, index) => {
+    return <Char 
+      character={ch} 
+      key = {index}
+      clicked = {() => this.deleteCharHandler(index)}
+      />
+  });
+
   let people = null;
+  
   
   if (this.state.showPeople){
       people = (
@@ -79,6 +129,7 @@ render (){
           })}
         </div> 
       );
+    
   }
 
   let input = (
@@ -87,18 +138,39 @@ render (){
         <p>Length of the given input is equal to: {this.state.inputLength}</p>
       </div>
   )
+
+  const classes = [];
+  if (this.state.people.length <= 2 ){
+    classes.push('red')
+  }
+  if(this.state.people.length <= 1){
+    classes.push('bold');
+  }
   
     return (
       <div className="App">
-
+        
         {input}
         <h1> I'm a React App</h1>      
-        <p> This is really working!</p>  
-        <button onClick={this.togglePeopleHandler}>Toggle People</button>
-        {people}
-        
-      </div>
+        <p className = {classes.join(' ')}> This is really working!</p>
+        <Validation inputLength ={this.state.inputLength} />
+        <div>
+          <button 
+              className= 'button'
+              alt = {this.state.showPeople}
+              onClick={this.togglePeopleHandler}>
+              Toggle People
+          </button>
+            {people}
+          </div>        
+        <div>
+          {charList}
+        </div>
+      </div> 
+
     );
   };
+
+  
 }
 export default App;

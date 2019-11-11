@@ -7,23 +7,30 @@
     text-align: cetner;
 }
 
+@media (min-width: 500px) {
+    .Person{
+        width: 450px;
+    }
+}
 button{
     padding: 5px;
-    background-color:white;
+    color:white;
+    background-color:rgb(41, 109, 61);
     font: 'inherit';
-    border: '1px solid blue';
+    border: none;
     padding: '8px';
     cursor: 'pointer';
-    border-radius: 30%;
+    height: 30px;
+
 }
 
 button:hover{
     cursor: pointer;
-    background: #4CAF50;
+    background: rgb(0, 0, 0);
     border: none;
-    transition-duration: 1s;
+
 }
 button:focus{
-    background: #4CAF50;
+    background: rgb(223, 125, 130);
     border: none;
 }
